@@ -31,8 +31,6 @@ async function main() {
       'Cache-Control': 'no-cache',
     });
 
-    res.write('Connection established');
-
     const clientId = crypto.randomUUID();
     const newClient = {
       id: clientId,
@@ -59,9 +57,8 @@ async function main() {
       });
     }, 500);
     setInterval(() => {
-      UiClients.forEach((client) => {
-        client.response.write(JSON.stringify(Object.fromEntries(graph.getAdjacencyList())));
-      });
+      const data = JSON.stringify(Object.fromEntries(graph.getAdjacencyList()));
+      UiClients.forEach((client) => client.response.write(`data: ${data}\n\n`));
     }, 200);
   } catch (err) {
     console.log(`Error occured: ${err.message}`);

@@ -5,7 +5,7 @@ export class Logger {
   private logFile: string;
 
   constructor(rootDir: string = __dirname) {
-    this.logFile = path.join(rootDir, 'log.txt');
+    this.logFile = path.join(rootDir, 'data.log');
   }
 
   async addLog(log: string) {
