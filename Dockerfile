@@ -1,17 +1,20 @@
 FROM node:16-slim AS base
+RUN apt-get update
 WORKDIR /app
-COPY . .
+COPY package.json ./
+COPY package-lock.json ./
 RUN npm ci
 
-FROM base AS build
+FROM base as source
+COPY . .
+EXPOSE 3000
+WORKDIR /app
+
+FROM source AS dev
+CMD [ "npm", "run", "dev"]
+
+FROM source AS build
 RUN npm run build
 
-FROM base AS deploy
-CMD ['npm', 'start']
-
-FROM base AS dev
-ENV PORT=3000
-ENV REDIS_HOST=localhost
-ENV REDIS_PORT=6379
-ENV SYMBOLS=50
-CMD ['npm', 'run', 'dev']
+FROM source AS deploy
+CMD [ "node", "dist/src/index.js" ]
