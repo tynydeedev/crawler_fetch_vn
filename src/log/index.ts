@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import uiClient from '../resources/ui-client';
 
 export class Logger {
   private logFile: string;
@@ -9,9 +10,13 @@ export class Logger {
   }
 
   async addLog(log: string) {
-    return fs.promises
-      .appendFile(this.logFile, `${new Date().toISOString()} --- ${log}\n`)
+    const logString = `${new Date().toISOString()} --- ${log}`;
+    await fs.promises
+      .appendFile(this.logFile, logString + '\n')
       .catch((err) => console.log('Append log error: ', err));
+    await Promise.all(
+      uiClient.logClients.map((client) => client.response.write(`data: ${logString}\n\n`)),
+    );
   }
 
   async cleanLogFile() {

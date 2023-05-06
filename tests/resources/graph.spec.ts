@@ -71,24 +71,24 @@ describe('Graph', () => {
 
     beforeEach(() => loggerSpy.mockClear());
 
-    it('should log the triangle arbitrage oppotunity with ETH', () => {
-      graph.traverse('ETH');
+    it('should log the triangle arbitrage oppotunity with ETH', async () => {
+      await graph.traverse('ETH');
       expect(loggerSpy).toHaveBeenCalledTimes(1);
       expect(loggerSpy.mock.calls[0][0]).toContain(
         'ETH - sell(1.2) -> BTC - sell(25500) -> USDT - buy(1970) -> ETH. Profit rate:',
       );
     });
 
-    it('should log the triangle arbitrage oppotunity with BTC', () => {
-      graph.traverse('BTC');
+    it('should log the triangle arbitrage oppotunity with BTC', async () => {
+      await graph.traverse('BTC');
       expect(loggerSpy).toHaveBeenCalledTimes(1);
       expect(loggerSpy.mock.calls[0][0]).toContain(
         'BTC - sell(25500) -> USDT - buy(1970) -> ETH - sell(1.2) -> BTC. Profit rate:',
       );
     });
 
-    it('should log the triangle arbitrage oppotunity with USDT', () => {
-      graph.traverse('USDT');
+    it('should log the triangle arbitrage oppotunity with USDT', async () => {
+      await graph.traverse('USDT');
       expect(loggerSpy).toHaveBeenCalledTimes(1);
       expect(loggerSpy.mock.calls[0][0]).toContain(
         'USDT - buy(1970) -> ETH - sell(1.2) -> BTC - sell(25500) -> USDT. Profit rate:',

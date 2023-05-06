@@ -60,7 +60,14 @@ class Graph {
     return this.adjacencyList.get(vertex) || [];
   }
 
-  traverse(vertex: string) {
+  /**
+   * Traverses the graph and returns all the triangle arbitrage opportunities of the starting vertex.
+   * This function is promisified to avoid blocking the main thread.
+   *
+   * @param vertex starting vertex
+   * @returns List of triangle arbitrage opportunities available for the given vertex
+   */
+  async traverse(vertex: string) {
     const possibilities: Array<Array<string>> = [];
 
     this.traverseUtil(vertex, possibilities);
@@ -93,6 +100,8 @@ class Graph {
         void logger.addLog(log);
       }
     }
+
+    return possibilities;
   }
 
   traverseUtil(vertex: string, possibilities: Array<Array<string>>, visited: string[] = []) {

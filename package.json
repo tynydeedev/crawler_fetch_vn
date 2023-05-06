@@ -6,7 +6,7 @@
     "dev": "ts-node-dev src/index.ts",
     "build": "tsc --build",
     "start": "node dist/src/index.js",
-    "lint": "eslint --ext .js,.ts --fix",
+    "lint": "eslint src --ext .js,.ts --fix",
     "test": "jest",
     "clean": "tsc --build --clean"
   },
