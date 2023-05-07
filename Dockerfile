@@ -17,4 +17,4 @@ FROM source AS build
 RUN npm run build
 
 FROM build AS deploy
-CMD [ "pm2", "start", "dist/src/index.js", "--name", "crawler_api" ]
+CMD [ "pm2-runtime", "dist/src/index.js", "--name", "crawler_api" ]
