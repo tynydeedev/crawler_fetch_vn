@@ -75,7 +75,7 @@ async function main() {
 
     // SYMBOLS is the amount of symbols the server will pool from binance.
     // These will be the first {SYMBOLS} symbols returned from the exchangeInfo API.
-    await pool(Number(process.env.SYMBOLS));
+    await pool(parseInt(process.env.SYMBOLS || ''));
 
     // Each 500ms the server will traverse the graph beginning from every symbols to find
     // the available triangle arbitrage opportunities.

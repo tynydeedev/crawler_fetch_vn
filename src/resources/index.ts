@@ -5,6 +5,8 @@ import binanceClient from '../clients/binance';
 import redisClient from '../clients/redis';
 
 export async function pool(amount = 40) {
+  console.log(`Pooling ${amount} symbols...`);
+
   const bookTickers: any[] = [];
   const list = await getExchangeInfo();
   await redisClient.connect();
