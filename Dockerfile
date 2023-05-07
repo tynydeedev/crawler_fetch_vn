@@ -1,6 +1,6 @@
 FROM node:16-slim AS base
-RUN apt-get update
 WORKDIR /app
+RUN npm install -g pm2@latest
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm ci
@@ -16,5 +16,5 @@ CMD [ "npm", "run", "dev"]
 FROM source AS build
 RUN npm run build
 
-FROM source AS deploy
-CMD [ "node", "dist/src/index.js" ]
+FROM build AS deploy
+CMD [ "pm2", "start", "dist/src/index.js", "--name", "crawler_api" ]
